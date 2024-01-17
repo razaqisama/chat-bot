@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+}
+
+model MessageHistory {
+  id       String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title    String
+  messages Message[]
+  createdAt         DateTime @default(now())
+
+  @@index([createdAt(sort: Desc)])
+}
+
+model Message {
+  id                String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  role              String @db.VarChar(255)
+  message           String
+  ratingStatus      Int?
+  feedback          String?
+  messageHistoryId  String @db.Uuid
+  messageHistory MessageHistory @relation(fields: [messageHistoryId], references: [id])
+  createdAt         DateTime @default(now())
+
+  @@index([createdAt(sort: Desc)])
+}
