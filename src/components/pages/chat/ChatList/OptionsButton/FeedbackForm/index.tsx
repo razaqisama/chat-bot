@@ -71,7 +71,7 @@ function FeedbackForm({
             Ceritakan pengalaman tentang balasan chat ini
           </h4>
         </div>
-        <form onSubmit={handleSubmitForm}>
+        <form className="flex flex-col gap-4" onSubmit={handleSubmitForm}>
           <textarea
             name="form-feedback"
             placeholder="Berikan tanggapanmu..."
