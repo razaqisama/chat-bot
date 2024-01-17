@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getChatHistories } from "../../lib/chatHistory/getChatHistories";
 
+export const runtime = "edge";
+
 async function ChatHistoryPage() {
   const { data } = await getChatHistories();
 
