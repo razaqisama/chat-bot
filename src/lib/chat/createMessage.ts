@@ -14,7 +14,7 @@ export async function createMessage(
   body: createMessageBodyParams,
   options?: FetchDataOptions,
 ) {
-  const newMessage = await fetch(`${config.APP_API_URL}/chat`, {
+  const response = await fetch(`${config.APP_API_URL}/chat`, {
     method: "POST",
     body: JSON.stringify(body),
     next: {
@@ -22,11 +22,11 @@ export async function createMessage(
     },
   });
 
-  const res = await newMessage.json();
+  const data = await response.json();
 
   if (options?.revalidate) {
     revalidateTag("chat-histories");
   }
 
-  return res;
+  return data;
 }

@@ -15,7 +15,7 @@ export async function createMessageFeedback(
   body: createMessageBodyParams,
   options?: FetchDataOptions,
 ): Promise<FetchDataResponse<IMessage>> {
-  const newMessage = await fetch(`${config.APP_API_URL}/chat`, {
+  const response = await fetch(`${config.APP_API_URL}/chat`, {
     method: "PATCH",
     body: JSON.stringify(body),
     next: {
@@ -23,11 +23,11 @@ export async function createMessageFeedback(
     },
   });
 
-  const res = await newMessage.json();
+  const data = await response.json();
 
   if (options?.revalidate) {
     revalidateTag(`chat-history-${body.id}`);
   }
 
-  return res;
+  return data;
 }

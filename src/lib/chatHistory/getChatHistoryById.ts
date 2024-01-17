@@ -10,16 +10,16 @@ export async function getChatHistoryById(
   id: string,
   options?: FetchDataOptions,
 ): Promise<FetchDataResponse<IMessageHistory>> {
-  const test = await fetch(`${config.APP_API_URL}/chat-history/${id}`, {
+  const response = await fetch(`${config.APP_API_URL}/chat-history/${id}`, {
     next: {
       revalidate: 3600,
       tags: [`chat-history-${id}`],
     },
   });
 
-  const res = await test.json();
+  const data = await response.json();
 
-  if (res.err) {
+  if (data.err) {
     redirect("/");
   }
 
@@ -27,5 +27,5 @@ export async function getChatHistoryById(
     revalidateTag(`chat-history-${id}`);
   }
 
-  return res;
+  return data;
 }
