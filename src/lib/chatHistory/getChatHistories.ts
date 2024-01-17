@@ -1,7 +1,6 @@
 "use server";
 
 import { revalidateTag } from "next/cache";
-import { redirect } from "next/navigation";
 import { config } from "@/config";
 import { FetchDataOptions, FetchDataResponse } from "../type";
 import { IMessageHistory } from "./type";
@@ -17,10 +16,6 @@ export async function getChatHistories(
   });
 
   const res = await test.json();
-
-  if (res.err) {
-    redirect("/");
-  }
 
   if (options?.revalidate) {
     revalidateTag("chat-histories");
